@@ -1,14 +1,22 @@
 from exceptions import PermissionDenied 
 from base import Base
-from sqlalchemy import select, update, where
+from sqlalchemy import select, update, where, ForeignKey, DateTime
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
+
+class PostUpvotes(Base):
+  __tablename__ = 'postupvotes'
+
+  post_id: Mapped[int] = mapped_column(ForeignKey("post.id"), primary_key=True)
+  user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), primary_key=True)
 
 
 class Post(Base):
   __tablename__ = 'post'
 
   id: Mapped[int] = mapped_column(primary_key=True)
+  date: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=func.now())
   author: Mapped[str]
   content: Mapped[str]
 
