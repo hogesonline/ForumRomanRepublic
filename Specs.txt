@@ -1,0 +1,54 @@
+Forum for the Roman Republic
+
+
+Post:
+	• A Post is created by a particular author.
+	• The author is able to edit the content, but other users cannot.
+	• Any user should be able to bump the upvotes, but only once per user.
+Thread:
+	• A Thread is created with a title, and a first post.
+	• The owner of the thread is the author of the first post.
+	• Any user can add a new post to the thread.
+	• A user can only remove their own post from the thread.
+	• The thread owner can edit the title and the tags, but other users cannot.
+Forum:
+	• The Forum contains a list of threads.
+	• Users can search for threads by tag.
+	• Users can search for posts by author.
+
+This is an example of how this forum should work:
+
+forum = Forum()
+thread = forum.publish('Battle of Zela', 'Veni, vidi, vici!', 'Caesar')
+thread.set_tags(['battle', 'brag'], 'Caesar')
+thread.publish_post(Post('That was quick!', 'Amantius'))
+thread.publish_post(Post('Hardly broke a sweat.', 'Caesar'))
+thread.publish_post(Post('Any good loot?', 'Amantius'))
+
+# Search by author
+print("The contents of Caesar's posts:")
+caesar_posts = forum.search_by_author('Caesar')
+print(sorted([p.get_content() for p in caesar_posts]))
+print()
+
+# Edit content of an existing post
+existing = thread.get_posts()[0]
+existing.set_content('I came, I saw, I conquered!', 'Caesar')
+
+# Upvote a post:
+existing.upvote('Cleopatra')
+existing.upvote('Brutus')
+existing.upvote('Amantius')
+existing.upvote('Cleopatra')
+
+print("[{}](+{}) -- {}\n".format(
+  existing.get_author(),
+  existing.get_upvotes(),
+  existing.get_content()
+))
+
+# And some access control:
+try:
+  thread.set_title('Hijacked!', 'Cleopatra')
+except PermissionDenied:
+  print('Cleopatra was not allowed to hijack the thread.')
