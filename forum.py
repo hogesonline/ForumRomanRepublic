@@ -22,7 +22,8 @@ class Forum:
     Threads are stored in the order that they are published.
     Returns the new Thread object.
     """
-    thread = Thread(title, content, author)
+    post = Post(content, author)
+    thread = Thread(title, post)
 
     self.threads.append(thread)
     return thread
@@ -34,8 +35,8 @@ class Forum:
     """
     matching = []
 
-    for thread in threads:
-      if tag in tread.get_tags():
+    for thread in self.threads:
+      if tag in thread.get_tags():
         matching.append(thread)
 
     return matching
@@ -47,8 +48,8 @@ class Forum:
     """
     matching = []
 
-    for thread in threads:
-      if author == tread.get_owner():
+    for thread in self.threads:
+      if author == thread.get_owner():
         matching.append(thread)
 
     return matching
