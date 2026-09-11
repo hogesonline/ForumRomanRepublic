@@ -10,7 +10,6 @@ class Thread:
     """
     self.title = title
     self.first_post = first_post
-    pass
 
   def get_owner(self):
     """
