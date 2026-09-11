@@ -8,6 +8,8 @@ class Thread:
     The author of the first post at the time of thread creation is the owner of the thread.
     The owner cannot change once the thread is created.
     """
+    self.title = title
+    self.first_post = first_post
     pass
 
   def get_owner(self):
